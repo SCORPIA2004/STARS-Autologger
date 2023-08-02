@@ -85,3 +85,15 @@ Time,Type,Message,02/08/2023 16:31:59
 02/08/2023 16:32:06,Success,Found email with verification code
 02/08/2023 16:32:07,Success,Found verification code
 02/08/2023 16:32:07,Success,Successfully logged in to STARS.
+Time,Type,Message,02/08/2023 16:36:29
+02/08/2023 16:36:29,Fail,STARS username is empty
+Time,Type,Message,02/08/2023 16:36:41
+02/08/2023 16:36:41,Success,Got login details from file.
+Time,Type,Message,02/08/2023 16:37:15
+02/08/2023 16:37:15,Success,Got login details from file.
+02/08/2023 16:37:17,Success,Opened STARS login page.
+02/08/2023 16:37:17,Success,Entered STARS username and password.
+02/08/2023 16:37:18,Success,Opened webmail login page.
+02/08/2023 16:37:21,Success,Found email with verification code
+02/08/2023 16:37:22,Success,Found verification code
+02/08/2023 16:37:22,Success,Successfully logged in to STARS.

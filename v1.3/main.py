@@ -70,12 +70,13 @@ webmail_url = 'https://webmail.bilkent.edu.tr/'
 
 # Set the browser options
 options = webdriver.ChromeOptions()
+options.add_argument("--start-maximized")
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--ignore-ssl-errors')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 # Create a new instance of the Chrome driver
-driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
+driver = webdriver.Chrome(executable_path=chromedriver_path, options=options, )
 
 # Open the STARS login page
 driver.get(stars_url)
@@ -158,6 +159,7 @@ verification_code = verification_code_element.text.split()[2]
 driver.switch_to.default_content()
 
 # Return to the previous tab and enter the verification code in the appropriate field
+
 driver.switch_to.window(driver.window_handles[0])
 verification_code_field = driver.find_element_by_id('EmailVerifyForm_verifyCode')
 verification_code_field.send_keys(verification_code)
