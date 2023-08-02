@@ -1,4 +1,4 @@
-stars_username = 22101343
-stars_password = C9NAXC
-webmail_username = shayan.usman@ug.bilkent.edu.tr
-webmail_password = 0ZezSHZi
+stars_username = ''
+stars_password = ''
+webmail_username = ''
+webmail_password = ''

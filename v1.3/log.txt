@@ -1,4 +1,0 @@
-02/08/2023 15:06:14 | Got login details from file.
-02/08/2023 15:07:27 | Got login details from file.
-02/08/2023 15:07:36 | Successfully logged in to STARS.
-02/08/2023 15:11:39 | Success: Got login details from file.

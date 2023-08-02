@@ -1,4 +1,5 @@
 import csv
+import os
 import time
 from datetime import datetime
 from selenium import webdriver
@@ -8,19 +9,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-def logMessage(em):
+def logMessage(em, type):
     now = datetime.now()
     current_time = now.strftime("%d/%m/%Y %H:%M:%S")
     with open("log.csv", "a", newline="") as f:
         writer = csv.writer(f)
-        row = [current_time, em]
+        row = [current_time, type, em]
         writer.writerow(row)
 
 with open("log.csv", "a", newline="") as f:
     now = datetime.now()
     current_time = now.strftime("%d/%m/%Y %H:%M:%S")
     writer = csv.writer(f)
-    row = ["Time", "Message", current_time]
+    row = ["Time", "Type", "Message", current_time]
     writer.writerow(row)
 
 
@@ -29,23 +30,39 @@ chromedriver_path = './chromedriver.exe'
 
 # Set the username and password for the STARS account and the Bilkent webmail account
 file_name = 'loginDetails.txt'
+# check if file exists
+if not os.path.isfile(file_name):
+    logMessage("loginDetails.txt is missing", "Fail")
+    exit(1)
+
 login_details = {}
-try:
-    with open(file_name, 'r') as file:
-        for line in file:
-            if line.startswith("stars_username"):
-                stars_username = line.split("=")[1].strip()
-            elif line.startswith("stars_password"):
-                stars_password = line.split("=")[1].strip()
-            elif line.startswith("webmail_username"):
-                webmail_username = line.split("=")[1].strip()
-            elif line.startswith("webmail_password"):
-                webmail_password = line.split("=")[1].strip()
-    logMessage("Success: Got login details from file.")
-except FileNotFoundError:
-    logMessage(f"Failure: File '{file_name}' not found.")
-except Exception as e:
-    logMessage(f"Failure: Error reading '{file_name}': {e}")
+
+with open(file_name, 'r') as file:
+    for line in file:
+        if line.startswith("stars_username"):
+            stars_username = line.split("'")[1].strip("'")
+            if stars_username == "":
+                logMessage("STARS username is empty", "Fail")
+                exit(1)
+        elif line.startswith("stars_password"):
+            stars_password = line.split("'")[1].strip("'")
+            if stars_password == "":
+                logMessage("STARS password is empty", "Fail")
+                exit(1)
+        elif line.startswith("webmail_username"):
+            webmail_username = line.split("'")[1].strip("'")
+            if webmail_username == "":
+                logMessage("Webmail username is empty", "Fail")
+                exit(1)
+        elif line.startswith("webmail_password"):
+            webmail_password = line.split("'")[1].strip("'")
+            if webmail_password == "":
+                logMessage("Webmail password is empty", "Fail")
+                exit(1)
+
+
+logMessage("Got login details from file.", "Success")
+
 
 # Set the URL for the STARS login page and the webmail login page
 stars_url = 'https://stars.bilkent.edu.tr/srs/'
@@ -62,7 +79,7 @@ driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
 
 # Open the STARS login page
 driver.get(stars_url)
-logMessage("Success: Opened STARS login page.")
+logMessage("Opened STARS login page.", "Success")
 
 # Enter the STARS username and password
 username_field = driver.find_element_by_id('LoginForm_username')
@@ -70,13 +87,13 @@ username_field.send_keys(stars_username)
 password_field = driver.find_element_by_id('LoginForm_password')
 password_field.send_keys(stars_password)
 password_field.send_keys(Keys.RETURN)
-logMessage("Success: Entered STARS username and password.")
+logMessage("Entered STARS username and password.", "Success")
 
 # Open a new tab and go to the webmail login page
 driver.execute_script("window.open('');")
 driver.switch_to.window(driver.window_handles[1])
 driver.get(webmail_url)
-logMessage("Success: Opened webmail login page.")
+logMessage("Opened webmail login page.", "Success")
 
 # Wait for the webmail inbox to recieve email code
 time.sleep(1)
@@ -93,8 +110,12 @@ password_field.send_keys(Keys.RETURN)
 time.sleep(1)
 
 # Wait for the inbox to load
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "messagelist-header")))
-
+try:
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "messagelist-header")))
+except TimeoutException:
+    # write error to a log.txt file
+    logMessage("Webmail login failed. Check you username and password", "Fail")
+    exit(1)
 # Find the most recent email with the subject "Secure Login Gateway E-Mail Verification Code"
 email = driver.find_element_by_xpath(
     '//td[contains(.//span[@class="subject"], "Secure Login Gateway E-Mail Verification Code")]')
@@ -103,15 +124,20 @@ email = driver.find_element_by_xpath(
 email.click()
 
 # Wait for the page to load completely
-WebDriverWait(driver, 3).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+try:
+    WebDriverWait(driver, 3).until(lambda d: d.execute_script('return document.readyState') == 'complete')
+except TimeoutException:
+    # write error to a log.txt file
+    logMessage("STARS login failed. Check you verification code", "Fail")
+    exit(1)
 
 # Wait for the expected element to be present
 try:
     WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "messagelist-header")))
-    logMessage("Success: Found email with verification code")
+    logMessage("Found email with verification code", "Success")
 except TimeoutException:
     # write error to a log.txt file
-    logMessage("Failure: Timeout occurred while waiting for page to load.")
+    logMessage("Timeout occurred while waiting for page to load.", "Fail")
 
 # switch to iframe
 iframe = driver.find_element_by_id('messagecontframe')
@@ -120,10 +146,10 @@ driver.switch_to.frame(iframe)
 # search for element inside iframe
 try:
     WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "messagebody")))
-    logMessage("Success: Found verification code")
+    logMessage("Found verification code", "Success")
 
 except TimeoutException:
-    logMessage("Failure: Timeout occurred while waiting for page to load.")
+    logMessage("Timeout occurred while waiting for page to load.", "Fail")
 
 verification_code_element = driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div[2]/div[2]/div/div')
 verification_code = verification_code_element.text.split()[2]
@@ -141,4 +167,4 @@ verify_button.click()
 
 # Wait for the page to load completely
 WebDriverWait(driver, 3).until(lambda d: d.execute_script('return document.readyState') == 'complete')
-logMessage("Successfully logged in to STARS.")
+logMessage("Successfully logged in to STARS.", "Success")

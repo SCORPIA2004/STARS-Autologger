@@ -13,10 +13,10 @@ from bs4 import BeautifulSoup
 chromedriver_path = './chromedriver.exe'
 
 # Set the username and password for the STARS account and the Bilkent webmail account
-stars_username = '22101343'
-stars_password = 'C9NAXC'
-webmail_username = 'shayan.usman@ug.bilkent.edu.tr'
-webmail_password = '0ZezSHZi'
+stars_username = ''
+stars_password = ''
+webmail_username = ''
+webmail_password = ''
 
 # Set the URL for the STARS login page and the webmail login page
 stars_url = 'https://stars.bilkent.edu.tr/srs/'
