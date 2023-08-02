@@ -1,2 +1,2 @@
 # STARS-Autologger
-Automatically signs you into STARS
+Python script to automatically sign you into STARS. Made using Python and Selenium
