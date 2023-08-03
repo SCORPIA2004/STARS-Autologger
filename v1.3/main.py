@@ -1,6 +1,7 @@
 import csv
 import os
 import time
+from sys import exit
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -76,7 +77,7 @@ options.add_argument('--ignore-ssl-errors')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 # Create a new instance of the Chrome driver
-driver = webdriver.Chrome(executable_path=chromedriver_path, options=options, )
+driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
 
 # Open the STARS login page
 driver.get(stars_url)
