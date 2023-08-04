@@ -1,4 +1,0 @@
-stars_username = ''
-stars_password = ''
-webmail_username = ''
-webmail_password = ''
