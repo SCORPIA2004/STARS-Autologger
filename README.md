@@ -3,7 +3,7 @@ Python script to automatically sign you into STARS. Made using Python and Seleni
 
 ## How to use:
 1. Click on code button code button
-![code button](https://github.com/SCORPIA2004/STARS-Autologger/assets/62741526/24bd2905-bfd4-42cc-a5eb-71b9bc198306)
+<img src="src/code button.png"><br>
 2. Select "Download ZIP" from the drop down menu
 3. Extract to the folder of your choice
 4. Go to "dist" folder
@@ -14,7 +14,7 @@ Python script to automatically sign you into STARS. Made using Python and Seleni
 ## Known issues:
 Chrome keeps updating their chromedriver and it's possible you might get a version conflict (similiar to below). Just follow the steps below to fix it:
 <br><br>
-![chromeDriver error](https://github.com/SCORPIA2004/STARS-Autologger/assets/62741526/989e4c7b-697f-49f2-9468-20351662bcb1)
+<p align="center"><img src="src/chromeDriver error.png"></p>
 <br>
 
 1. Download the latest version from <a href="https://chromedriver.chromium.org/downloads">here</a>
