@@ -12,7 +12,8 @@ Python script to automatically sign you into Bilkent STARS and Webmail with a si
 5. Enter your login details in the "loginDetails.txt" file
 6. Click on "STARS Autologger v1.3"
 7. A new Chrome window will open that will automatically sign you in to STARS.
-8. (Optional) Click and drag the "STARS Autologger v1.3" shortcut to your taskbar to pin it there.
+8. You can safely close the console window after it logs you into the SRS system
+9. (Optional) Click and drag the "STARS Autologger v1.3" shortcut to your taskbar to pin it there
 
 ## Known issues:
 Chrome keeps updating their chromedriver and it's possible you might get a version conflict (similiar to below). Just follow the steps below to fix it:
