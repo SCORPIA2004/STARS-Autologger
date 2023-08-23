@@ -2,7 +2,8 @@
 Python script to automatically sign you into Bilkent STARS and Webmail with a single click. Made using Python and Selenium.
 <br><br>
 <i>Note: This software only works for Windows devices. Support for other platforms is WIP</i>
-
+<br><br>
+<b><i>*** 23/08/2023: New update for chromedriver.exe for Chrome v116.0.5845.96. Download latest version from <a href="https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/win64/chromedriver-win64.zip">here</a> and place in dist folder ***</i></b>
 ## How to use:
 1. Click on code button code button
 <img src="src/code button.png"><br>
