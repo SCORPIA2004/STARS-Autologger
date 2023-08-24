@@ -25,4 +25,8 @@ Chrome keeps updating their chromedriver and it's possible you might get a versi
 1. Download the latest version from <a href="https://chromedriver.chromium.org/downloads">here</a>
 2. Extract "chromedriver.exe" and place it in the "dist" folder (replace the old one)
 
+## Releases:
+- v1.3: Added support for inputting loginDetails in txt file instead of hardcode
+- v1.4: Auto installs chromedriver 
+
 If there are any other problems, reach me at: mshayanalwaha@gmail.com
